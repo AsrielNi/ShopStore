@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using ShopApplication.Data;
 
 namespace TestZone
 {
@@ -6,6 +8,11 @@ namespace TestZone
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add DbContext
+
+            builder.Services.AddDbContext<ShopContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("ShopDataBase")));
 
             // Add services to the container.
 
