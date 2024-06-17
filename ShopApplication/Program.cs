@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ShopApplication.Data;
+
 namespace ShopApplication
 {
     public class Program
@@ -5,6 +8,9 @@ namespace ShopApplication
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<ShopContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("ShopDataBase")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
