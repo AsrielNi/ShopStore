@@ -36,11 +36,51 @@ namespace TestZone.Controllers
             {
                 _shopContext.CustomerInfo.Add(model);
                 await _shopContext.SaveChangesAsync();
-                return Ok();
+                return CreatedAtAction(nameof(AddData), new {id = model.CustomerID}, model);
             }
             else
             {
                 return BadRequest(ModelState);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateData(CustomerInfoModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _shopContext.CustomerInfo.FirstOrDefaultAsync();
+
+                _shopContext.Entry(result).State = EntityState.Detached;
+                model.CustomerID = result.CustomerID;
+                _shopContext.Entry(model).State = EntityState.Modified;
+
+                _shopContext.Update(model);
+                await _shopContext.SaveChangesAsync();
+
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteData(int customerID)
+        {
+            var result = await _shopContext.CustomerInfo.FindAsync(customerID);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _shopContext.CustomerInfo.Remove(result);
+                await _shopContext.SaveChangesAsync();
+
+                return NoContent();
             }
         }
     }
