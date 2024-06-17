@@ -18,7 +18,7 @@ namespace TestZone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetData(string name)
         {
-            var result = _shopContext.CustomerInfo.FirstOrDefaultAsync(m => m.CustomerName == name);
+            var result = await _shopContext.CustomerInfo.FirstOrDefaultAsync(m => m.CustomerName == name);
             if (result == null)
             {
                 return NotFound();
