@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ShopApplication.Data;
+using TestZone.Data;
 
 namespace TestZone
 {
@@ -13,6 +14,8 @@ namespace TestZone
 
             builder.Services.AddDbContext<ShopContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("ShopDataBase")));
+            builder.Services.AddDbContext<TestContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("TestDataBase")));
 
             // Add services to the container.
 
