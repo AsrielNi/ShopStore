@@ -7,5 +7,8 @@ namespace TestZone.Models
         [Key]
         public Guid SessionID { get; set; }
         public string Name { get; set; }
+
+        public UserSessionModel() { }
+        public UserSessionModel(Guid guid, string name) { SessionID = guid; Name = name;}
     }
 }
