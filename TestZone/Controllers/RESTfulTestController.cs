@@ -5,16 +5,21 @@ using ShopApplication.Models;
 
 namespace TestZone.Controllers
 {
+
+    // 測試用的控制器，測試完成的控制器會移動至'ShopApplication'的專案裡
+    // 按照'RESTful'的設計風格
+    // 內容可能隨時會改變
     [ApiController]
     [Route("[Controller]")]
-    public class TestController : ControllerBase
+    public class RESTfulTestController : ControllerBase
     {
         public readonly ShopContext _shopContext;
-        public TestController(ShopContext shopContext)
+        public RESTfulTestController(ShopContext shopContext)
         {
             _shopContext = shopContext;
         }
 
+        // 測試從資料庫裡面取得資料
         [HttpGet]
         public async Task<IActionResult> GetData(string name)
         {
@@ -29,6 +34,7 @@ namespace TestZone.Controllers
             }
         }
 
+        // 測試將資料寫入至資料庫
         [HttpPost]
         public async Task<IActionResult> AddData(CustomerInfoModel model)
         {
@@ -44,6 +50,7 @@ namespace TestZone.Controllers
             }
         }
 
+        // 測試將新的資料更新至資料庫
         [HttpPut]
         public async Task<IActionResult> UpdateData(CustomerInfoModel model)
         {
@@ -66,6 +73,7 @@ namespace TestZone.Controllers
             }
         }
 
+        // 測試將目標資料從資料庫刪除
         [HttpDelete]
         public async Task<IActionResult> DeleteData(int customerID)
         {
