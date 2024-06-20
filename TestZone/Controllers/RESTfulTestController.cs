@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using ShopApplication.Data;
 using ShopApplication.Models;
+using TestZone.Data;
+using TestZone.Models;
 
 namespace TestZone.Controllers
 {
@@ -13,17 +15,19 @@ namespace TestZone.Controllers
     [Route("[Controller]")]
     public class RESTfulTestController : ControllerBase
     {
-        public readonly ShopContext _shopContext;
-        public RESTfulTestController(ShopContext shopContext)
+        public readonly TestContext _testContext;
+        public RESTfulTestController(TestContext testContext)
         {
-            _shopContext = shopContext;
+            _testContext = testContext;
         }
 
         // 測試從資料庫裡面取得資料
         [HttpGet]
-        public async Task<IActionResult> GetData(string name)
+        public async Task<IActionResult> GetData(string name, string password)
         {
-            var result = await _shopContext.CustomerInfo.FirstOrDefaultAsync(m => m.CustomerName == name);
+            var result = await _testContext.Account.FirstOrDefaultAsync(m =>
+                m.AccountName == name && 
+                m.AccountPassword == password);
             if (result == null)
             {
                 return NotFound();
@@ -36,13 +40,15 @@ namespace TestZone.Controllers
 
         // 測試將資料寫入至資料庫
         [HttpPost]
-        public async Task<IActionResult> AddData(CustomerInfoModel model)
+        public async Task<IActionResult> AddData(AccountModel model)
         {
             if (ModelState.IsValid)
             {
-                _shopContext.CustomerInfo.Add(model);
-                await _shopContext.SaveChangesAsync();
-                return CreatedAtAction(nameof(AddData), new {id = model.CustomerID}, model);
+                Guid guid = Guid.NewGuid();
+                model.AccountID = guid;
+                _testContext.Account.Add(model);
+                await _testContext.SaveChangesAsync();
+                return CreatedAtAction(nameof(AddData), new {id = model.AccountID}, model);
             }
             else
             {
@@ -52,18 +58,22 @@ namespace TestZone.Controllers
 
         // 測試將新的資料更新至資料庫
         [HttpPut]
-        public async Task<IActionResult> UpdateData(CustomerInfoModel model)
+        public async Task<IActionResult> UpdateData(string name, string password, string new_password)
         {
             if (ModelState.IsValid)
             {
-                var result = await _shopContext.CustomerInfo.FirstOrDefaultAsync();
+                var result = await _testContext.Account.FirstOrDefaultAsync(m =>
+                    m.AccountName == name &&
+                    m.AccountPassword == password);
 
-                _shopContext.Entry(result).State = EntityState.Detached;
-                model.CustomerID = result.CustomerID;
-                _shopContext.Entry(model).State = EntityState.Modified;
+                if (result == null)
+                {
+                    return NotFound();
+                }
 
-                _shopContext.Update(model);
-                await _shopContext.SaveChangesAsync();
+                result.AccountPassword = new_password;
+                _testContext.Update(result);
+                await _testContext.SaveChangesAsync();
 
                 return NoContent();
             }
@@ -75,9 +85,11 @@ namespace TestZone.Controllers
 
         // 測試將目標資料從資料庫刪除
         [HttpDelete]
-        public async Task<IActionResult> DeleteData(int customerID)
+        public async Task<IActionResult> DeleteData(string name, string password)
         {
-            var result = await _shopContext.CustomerInfo.FindAsync(customerID);
+            var result = await _testContext.Account.FirstOrDefaultAsync(m =>
+                m.AccountName == name &&
+                m.AccountPassword == password);
 
             if (result == null)
             {
@@ -85,8 +97,8 @@ namespace TestZone.Controllers
             }
             else
             {
-                _shopContext.CustomerInfo.Remove(result);
-                await _shopContext.SaveChangesAsync();
+                _testContext.Account.Remove(result);
+                await _testContext.SaveChangesAsync();
 
                 return NoContent();
             }

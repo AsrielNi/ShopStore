@@ -12,8 +12,6 @@ namespace TestZone
 
             // Add DbContext
 
-            builder.Services.AddDbContext<ShopContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("ShopDataBase")));
             builder.Services.AddDbContext<TestContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("TestDataBase")));
 

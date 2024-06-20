@@ -11,5 +11,8 @@ namespace TestZone.Data
 
         // 測試'Session'用的資料表
         public DbSet<UserSessionModel> UserSession { get; set; }
+
+        // 測試'帳號註冊'用的資料表
+        public DbSet<AccountModel> Account { get; set; }
     }
 }
