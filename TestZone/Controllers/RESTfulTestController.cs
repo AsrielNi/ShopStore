@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ShopApplication.Data;
-using ShopApplication.Models;
 using TestZone.Data;
 using TestZone.Models;
 
@@ -23,11 +21,11 @@ namespace TestZone.Controllers
 
         // 測試從資料庫裡面取得資料
         [HttpGet]
-        public async Task<IActionResult> GetData(string name, string password)
+        public async Task<IActionResult> GetData([FromQuery]AccountModelDTO modelDTO)
         {
             var result = await _testContext.Account.FirstOrDefaultAsync(m =>
-                m.AccountName == name && 
-                m.AccountPassword == password);
+                m.AccountName == modelDTO.AccountName &&
+                m.AccountPassword == modelDTO.AccountPassword);
             if (result == null)
             {
                 return NotFound();
@@ -40,12 +38,11 @@ namespace TestZone.Controllers
 
         // 測試將資料寫入至資料庫
         [HttpPost]
-        public async Task<IActionResult> AddData(AccountModel model)
+        public async Task<IActionResult> AddData(AccountModelDTO modelDTO)
         {
             if (ModelState.IsValid)
             {
-                Guid guid = Guid.NewGuid();
-                model.AccountID = guid;
+                var model = new AccountModel(modelDTO);
                 _testContext.Account.Add(model);
                 await _testContext.SaveChangesAsync();
                 return CreatedAtAction(nameof(AddData), new {id = model.AccountID}, model);
