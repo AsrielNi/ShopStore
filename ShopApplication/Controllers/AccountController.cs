@@ -27,7 +27,7 @@ namespace ShopApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Space(string customerName)
         {
-            var result = await _shopContext.CustomerInfo.FirstOrDefaultAsync(m => m.CustomerName == customerName);
+            var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountName == customerName);
 
             if (result == null)
             {
