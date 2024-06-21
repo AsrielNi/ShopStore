@@ -10,7 +10,7 @@ namespace ShopApplication.Data
         // 使用'DbContext'的初始化建構式
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
 
-        // ORM參考'CustomerInfoModel'，資料庫內的資料表名稱為'CustomerInfo'
-        public DbSet<CustomerInfoModel> CustomerInfo { get; set; }
+        // ORM參考'AccountInfo'，資料庫內的資料表名稱為'AccountInfo'
+        public DbSet<AccountInfoModel> AccountInfo { get; set; }
     }
 }

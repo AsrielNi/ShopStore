@@ -5,13 +5,13 @@ using ShopApplication.Data;
 namespace ShopApplication.Controllers
 {
     // 處理消費者資料用的控制器
-    public class CustomerController : Controller
+    public class AccountController : Controller
     {
         // 儲存商家資料的資料庫
         public readonly ShopContext _shopContext;
         
         // 控制器的初始化建構式
-        public CustomerController(ShopContext shopContext)
+        public AccountController(ShopContext shopContext)
         {
             _shopContext = shopContext;
         }
