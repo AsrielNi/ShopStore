@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopApplication.Data;
+using ShopApplication.Models;
 
 namespace ShopApplication.Controllers
 {
@@ -17,17 +18,46 @@ namespace ShopApplication.Controllers
         }
         
         // 預設的首頁，目前沒有特別的規劃
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            HttpRequest request = HttpContext.Request;
+            string accountSession = request.Cookies["AccountSession"];
+            // 沒有對應的'Cookies'時
+            if (accountSession == null)
+            {
+                return View();
+            }
+            else
+            {
+                var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountID.ToString() == accountSession);
+                // 有對應的'Cookies'但值不符合(可能被client修改過)
+                if (result == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Space), new { accountName = result.AccountName});
+                }
+            }
+        }
+        
+        public IActionResult SignUp()
         {
             return View();
         }
-        
+
+        public IActionResult LogIn()
+        {
+            return View();
+        }
+
         // 消費者的個人空間，預計配合登入系統做調整
         // 保持登入的方式會採取 'Cookies - Session'
         [HttpPost]
-        public async Task<IActionResult> Space(string customerName)
+        public async Task<IActionResult> Space(string accountName)
         {
-            var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountName == customerName);
+            var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountName == accountName);
 
             if (result == null)
             {

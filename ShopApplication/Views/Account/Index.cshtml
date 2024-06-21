@@ -1,12 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Customer Page";
+    ViewData["Title"] = "Account Index Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <form asp-controller="Customer" asp-action="Space">
-        <p>Your Name:</p>
-        <input name="customerName" type="text">
-        <input id="submit" type="submit">
-    </form>
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignUp">Sign Up</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogIn">Log In</a>
+        </li>
+    </ul>
 </div>
