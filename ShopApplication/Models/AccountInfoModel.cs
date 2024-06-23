@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ShopApplication.DIYtype;
 
 namespace ShopApplication.Models
 {
@@ -10,9 +11,19 @@ namespace ShopApplication.Models
         public Guid AccountID { get; set; }
         public string AccountName { get; set; }
         public string AccountPassword { get; set; }
-        public int? AccountGender { get; set; } = null;
+        public Gender AccountGender { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime AccountBirthday { get; set; }
+
+        public AccountInfoModel() { }
+        public AccountInfoModel(AccountInfoModelDTO modelDTO)
+        {
+            this.AccountID = Guid.NewGuid();
+            this.AccountName = modelDTO.AccountName;
+            this.AccountPassword = modelDTO.AccountPassword;
+            this.AccountGender = modelDTO.AccountGender;
+            this.AccountBirthday = modelDTO.AccountBirthday;
+        }
     }
 }

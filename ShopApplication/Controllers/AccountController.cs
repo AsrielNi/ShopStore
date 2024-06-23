@@ -42,11 +42,13 @@ namespace ShopApplication.Controllers
             }
         }
         
+        // 對應'註冊'的檢視
         public IActionResult SignUp()
         {
             return View();
         }
 
+        // 對應'登入'的檢視
         public IActionResult LogIn()
         {
             return View();
