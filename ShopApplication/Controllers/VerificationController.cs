@@ -62,7 +62,7 @@ namespace ShopApplication.Controllers
             }
             else
             {
-                return View();
+                return RedirectToAction("LogIn", "Account");
             }
         }
     }

@@ -1,11 +1,15 @@
 ﻿@model ShopApplication.Models.AccountInfoModel
 
 @{
-    ViewData["Title"] = "Customer Page";
+    ViewData["Title"] = "Account Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to Your Space</h1>
-    <p>Hello @Html.DisplayFor(model => model.AccountName)</p>
+    <p>Hello</p>
+    <p>Account: @Html.DisplayFor(model => model.AccountName)</p>
+    <p>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">Log Out</a>
+    </p>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

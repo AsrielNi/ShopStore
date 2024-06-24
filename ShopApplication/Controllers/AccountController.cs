@@ -55,6 +55,21 @@ namespace ShopApplication.Controllers
             return View();
         }
 
+        // 登出帳戶的功能
+        // 透過賦值空字串給Cookies["UserSessionID"]和極短的有效期限來消除Client的指定Cookies。
+        public IActionResult LogOut()
+        {
+            CookieOptions options = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMilliseconds(1)
+            };
+
+            HttpResponse response = HttpContext.Response;
+            response.Cookies.Append("UserSessionID", "", options);
+
+            return RedirectToAction("Index");
+        }
+
         // 消費者的個人空間，預計配合登入系統做調整
         // 保持登入的方式會採取 'Cookies - Session'
         public async Task<IActionResult> Space(string user)
