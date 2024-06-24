@@ -41,6 +41,8 @@ namespace ShopApplication.Controllers
             }
         }
 
+        // 作為 AccountController - LogIn 的 LogIn.cshtml 的驗證方法
+        // 加入Cookies["UserSessionID"]來作為持續登入的依據
         [HttpPost]
         public async Task<IActionResult> AccountLogIn(string name, string password)
         {
@@ -50,7 +52,13 @@ namespace ShopApplication.Controllers
 
             if (result != null)
             {
-                return RedirectToAction("Space", "Account", new { user=$"{name}"});
+                string? serverSessionID = result.AccountID.ToString();
+                
+                HttpResponse response = HttpContext.Response;
+                response.Cookies.Append("UserSessionID", serverSessionID);
+
+                return RedirectToAction("Space", "Account", new { user = $"{name}" });
+                
             }
             else
             {

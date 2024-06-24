@@ -21,7 +21,8 @@ namespace ShopApplication.Controllers
         public async Task<IActionResult> Index()
         {
             HttpRequest request = HttpContext.Request;
-            string accountSession = request.Cookies["AccountSession"];
+            string? accountSession = request.Cookies["UserSessionID"];
+
             // 沒有對應的'Cookies'時
             if (accountSession == null)
             {
@@ -29,7 +30,7 @@ namespace ShopApplication.Controllers
             }
             else
             {
-                var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountID.ToString() == accountSession);
+                var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountID.ToString() == accountSession.ToUpper());
                 // 有對應的'Cookies'但值不符合(可能被client修改過)
                 if (result == null)
                 {
@@ -37,7 +38,7 @@ namespace ShopApplication.Controllers
                 }
                 else
                 {
-                    return RedirectToAction(nameof(Space), new { accountName = result.AccountName});
+                    return RedirectToAction(nameof(Space), new { user = result.AccountName});
                 }
             }
         }
