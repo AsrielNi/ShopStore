@@ -8,11 +8,11 @@
     <form asp-controller="Verification" asp-action="AccountSignUp">
         <p>
             Name:
-            <input name="AccountName" type="text">
+            <input asp-for="AccountName" type="text">
         </p>
         <p>
             Password:
-            <input name="AccountPassword" type="password">
+            <input asp-for="AccountPassword" type="password">
         </p>
         <p>
             Gender:
@@ -21,7 +21,7 @@
         </p>
         <p>
             Birthday:
-            <input name="AccountBirthday" type="date">
+            <input asp-for="AccountBirthday" type="date">
         </p>
         <input id="submit" type="submit" value="submit">
     </form>

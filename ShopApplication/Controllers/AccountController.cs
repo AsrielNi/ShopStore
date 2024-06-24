@@ -56,10 +56,9 @@ namespace ShopApplication.Controllers
 
         // 消費者的個人空間，預計配合登入系統做調整
         // 保持登入的方式會採取 'Cookies - Session'
-        [HttpPost]
-        public async Task<IActionResult> Space(string accountName)
+        public async Task<IActionResult> Space(string user)
         {
-            var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountName == accountName);
+            var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountName == user);
 
             if (result == null)
             {

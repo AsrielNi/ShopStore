@@ -40,5 +40,22 @@ namespace ShopApplication.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AccountLogIn(string name, string password)
+        {
+            var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(
+                m => m.AccountName == name &&
+                m.AccountPassword == password);
+
+            if (result != null)
+            {
+                return RedirectToAction("Space", "Account", new { user=$"{name}"});
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }
