@@ -3,10 +3,10 @@
 }
 
 <div class="text-center">
-    <form asp-controller="Verification" asp-action="AccountLogIn">
+    <form id="AccountData" name="AccountData" asp-controller="Verification" asp-action="AccountLogIn">
         <p>
             Name:
-            <input name="name" type="text">
+            <input id="name" name="name" type="text">
         </p>
         <p>
             Password:
@@ -15,3 +15,27 @@
         <input id="submit" type="submit" value="submit">
     </form>
 </div>
+<script>
+
+    $("#AccountData").submit(function (event) {
+        event.preventDefault();
+
+        var form = $(this);
+
+        $.ajax({
+            type: "POST",
+            url: "/Verification/AccountLogIn",
+            data: form.serialize(),
+            success: function (response) {
+                if (response === true) {
+                    var name = $("#name").val();
+                    var space_url = "Space/" + "?user=" + name;
+                    window.location = space_url;
+                }
+                else {
+                    alert("Name or Password is wrong!!");
+                }
+            }
+        })
+    })
+</script>

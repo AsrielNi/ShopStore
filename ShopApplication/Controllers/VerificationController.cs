@@ -42,27 +42,32 @@ namespace ShopApplication.Controllers
         }
 
         // 作為 AccountController - LogIn 的 LogIn.cshtml 的驗證方法
+        // 配合 Ajax 和 jQuery 使用
         // 加入Cookies["UserSessionID"]來作為持續登入的依據
         [HttpPost]
-        public async Task<IActionResult> AccountLogIn(string name, string password)
+        public async Task<bool> AccountLogIn(string name, string password)
         {
+            // 檢查帳號和密碼有登記於資料庫裡
             var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(
                 m => m.AccountName == name &&
                 m.AccountPassword == password);
 
             if (result != null)
             {
-                string? serverSessionID = result.AccountID.ToString();
-                
-                HttpResponse response = HttpContext.Response;
-                response.Cookies.Append("UserSessionID", serverSessionID);
+                CookieOptions options = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddMinutes(30)
+                };
 
-                return RedirectToAction("Space", "Account", new { user = $"{name}" });
-                
+                // 給予客戶端 Cookies["UserSessionID"]
+                HttpResponse response = HttpContext.Response;
+                response.Cookies.Append("UserSessionID", result.AccountID.ToString(), options);
+
+                return true;
             }
             else
             {
-                return RedirectToAction("LogIn", "Account");
+                return false;
             }
         }
     }
