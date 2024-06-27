@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using LogInSystem.DataContext;
+
 namespace LogInSystem
 {
     public class Program
@@ -5,6 +8,10 @@ namespace LogInSystem
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // add sqlite server
+            builder.Services.AddDbContext<LogInContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("SqliteDB")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
