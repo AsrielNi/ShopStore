@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="DataBase\" />
+    <Folder Include="Storage\SqilteCommand\" />
   </ItemGroup>
 
 </Project>
