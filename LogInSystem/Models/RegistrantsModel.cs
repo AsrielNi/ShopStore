@@ -5,7 +5,6 @@ namespace LogInSystem.Models
 {
     // 對應'註冊系統'的資料模型
     // 未來考慮加入'Email'屬性
-    // 可能加入DTO
     public class RegistrantsModel
     {
         [Key]
@@ -19,5 +18,16 @@ namespace LogInSystem.Models
 
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
+
+        public RegistrantsModel() { }
+
+        public RegistrantsModel(RegistrantsModelDTO modelDTO)
+        {
+            Guid accountID = Guid.NewGuid();
+            Name = modelDTO.Name;
+            Password = modelDTO.Password;
+            Gender = modelDTO.Gender;
+            Birthday = modelDTO.Birthday;
+        }
     }
 }

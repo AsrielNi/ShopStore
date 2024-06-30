@@ -1,8 +1,50 @@
-﻿@{
+﻿@model LogInSystem.Models.RegistrantsModelDTO
+
+@{
     ViewData["Title"] = "SignUp Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <form id="RegistrantsForm" name="RegistrantsForm" asp-controller="Authentication" asp-action="VerifySignUp" method="post">
+        <p>
+            @Html.DisplayNameFor(model => model.Name)
+            <input asp-for="Name" type="text">
+        </p>
+        <p>
+            @Html.DisplayNameFor(model => model.Password)
+            <input asp-for="Password" type="password">
+        </p>
+        <p>
+            @Html.DisplayNameFor(model => model.Gender)
+            <select asp-for="Gender" asp-items="@Html.GetEnumSelectList<LogInSystem.Mapping.Gender>()"></select>
+        </p>
+        <p>
+            @Html.DisplayNameFor(model => model.Birthday)
+            <input asp-for="Birthday" type="date">
+        </p>
+        <input id="submit" type="submit" value="submit">
+    </form>
 </div>
+<script>
+    $("#RegistrantsForm").submit(function (event) {
+        event.preventDefault();
+
+        var forms = $(this);
+
+        $.ajax({
+            type: "post",
+            url: document.getElementById("RegistrantsForm").getAttribute("action"),
+            data: forms.serialize(),
+            success: function (response) {
+                if (response === true) {
+                    alert("Success Sign Up.")
+                    window.location = "LogIn";
+                }
+                else {
+                    alert("Failed Sign Up.")
+                    alert("repeat name: " + $("#Name").val());
+                }
+            }
+        })
+    });
+</script>
