@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShopApplication.Data;
 using ShopApplication.Models;
+using ShopApplication.Areas.LogInSystem.Data;
 
 namespace ShopApplication.Controllers
 {
@@ -10,11 +11,14 @@ namespace ShopApplication.Controllers
     {
         // 儲存商家資料的資料庫
         public readonly ShopContext _shopContext;
+        // 儲存帳戶資料的資料庫
+        public readonly LogInContext _logInContext;
         
         // 控制器的初始化建構式
-        public AccountController(ShopContext shopContext)
+        public AccountController(ShopContext shopContext, LogInContext logInContext)
         {
             _shopContext = shopContext;
+            _logInContext = logInContext;
         }
         
         // 預設的首頁，目前沒有特別的規劃
@@ -42,39 +46,12 @@ namespace ShopApplication.Controllers
                 }
             }
         }
-        
-        // 對應'註冊'的檢視
-        public IActionResult SignUp()
-        {
-            return View();
-        }
-
-        // 對應'登入'的檢視
-        public IActionResult LogIn()
-        {
-            return View();
-        }
-
-        // 登出帳戶的功能
-        // 透過賦值空字串給Cookies["UserSessionID"]和極短的有效期限來消除Client的指定Cookies。
-        public IActionResult LogOut()
-        {
-            CookieOptions options = new CookieOptions
-            {
-                Expires = DateTime.Now.AddMilliseconds(1)
-            };
-
-            HttpResponse response = HttpContext.Response;
-            response.Cookies.Append("UserSessionID", "", options);
-
-            return RedirectToAction("Index");
-        }
 
         // 消費者的個人空間，預計配合登入系統做調整
         // 保持登入的方式會採取 'Cookies - Session'
         public async Task<IActionResult> Space(string user)
         {
-            var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountName == user);
+            var result = await _logInContext.Registrants.FirstOrDefaultAsync(m => m.Name == user);
 
             if (result == null)
             {

@@ -31,6 +31,21 @@ namespace ShopApplication.Areas.LogInSystem.Controllers
             return View();
         }
 
+        // 登出帳戶的功能
+        // 透過賦值空字串給Cookies["UserSessionID"]和極短的有效期限來消除Client的指定Cookies。
+        public IActionResult LogOut()
+        {
+            CookieOptions options = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMilliseconds(1)
+            };
+
+            HttpResponse response = HttpContext.Response;
+            response.Cookies.Append("UserSessionID", "", options);
+
+            return RedirectToAction("Index");
+        }
+
         // 對應'SignUp()'的檢查方法
         [HttpPost]
         public async Task<bool> VerifySignUp(RegistrantsModelDTO modelDTO)
@@ -48,7 +63,33 @@ namespace ShopApplication.Areas.LogInSystem.Controllers
             {
                 return false;
             }
+        }
 
+        // 對應'LogIn()'的檢查方法
+        [HttpPost]
+        public async Task<IActionResult> VerifyLogIn(string name, string password)
+        {
+            var result = await _logInContext.Registrants.FirstOrDefaultAsync(m =>
+                m.Name == name &&
+                m.Password == password);
+
+            if (result != null)
+            {
+                CookieOptions options = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddMinutes(30)
+                };
+
+                // 給予客戶端 Cookies["UserSessionID"]
+                HttpResponse response = HttpContext.Response;
+                response.Cookies.Append("UserSessionID", result.AccountID.ToString(), options);
+
+                return RedirectToAction("Space", "Account", new { area = "", user = result.Name });
+            }
+            else
+            {
+                return RedirectToAction("LogIn");
+            }
         }
     }
 }

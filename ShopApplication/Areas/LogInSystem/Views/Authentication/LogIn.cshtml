@@ -5,14 +5,14 @@
 }
 
 <div>
-    <form id="RegistrantsForm" name="RegistrantsForm">
+    <form id="RegistrantsForm" name="RegistrantsForm" asp-area="LogInSystem" asp-controller="Authentication" asp-action="VerifyLogIn" method="post">
         <p>
             @Html.DisplayNameFor(model => model.Name)
-            <input asp-for="Name" type="text">
+            <input id="name" name="name" type="text">
         </p>
         <p>
             @Html.DisplayNameFor(model => model.Password)
-            <input asp-for="Password" type="password">
+            <input id="password" name="password" type="password">
         </p>
         
         <input id="submit" type="submit" value="submit">
