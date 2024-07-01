@@ -14,15 +14,53 @@ namespace ShopApplication.Areas.LogInSystem.Controllers
         }
 
         // 登入系統的首頁
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            HttpRequest request = HttpContext.Request;
+            string? accountSession = request.Cookies["UserSessionID"];
+
+            if (accountSession == null)
+            {
+                return View();
+            }
+            else
+            {
+                var result = await _logInContext.Registrants.FirstOrDefaultAsync(m => m.AccountID.ToString() == accountSession.ToUpper());
+                // 有對應的'Cookies'但值不符合(可能被client修改過)
+                if (result == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Space", "Account", new { area = "", user = result.Name });
+                }
+            }
         }
 
         // 登入系統的'登入'頁面
-        public IActionResult LogIn()
+        public async Task<IActionResult> LogIn()
         {
-            return View();
+            HttpRequest request = HttpContext.Request;
+            string? accountSession = request.Cookies["UserSessionID"];
+
+            if (accountSession == null)
+            {
+                return View();
+            }
+            else
+            {
+                var result = await _logInContext.Registrants.FirstOrDefaultAsync(m => m.AccountID.ToString() == accountSession.ToUpper());
+                // 有對應的'Cookies'但值不符合(可能被client修改過)
+                if (result == null)
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Space", "Account", new { area = "", user = result.Name });
+                }
+            }
         }
 
         // 登入系統的'註冊'頁面
