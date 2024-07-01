@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopApplication.Data;
-using ShopApplication.Models;
 using ShopApplication.Areas.LogInSystem.Data;
 
 namespace ShopApplication.Controllers
@@ -34,7 +33,7 @@ namespace ShopApplication.Controllers
             }
             else
             {
-                var result = await _shopContext.AccountInfo.FirstOrDefaultAsync(m => m.AccountID.ToString() == accountSession.ToUpper());
+                var result = await _logInContext.Registrants.FirstOrDefaultAsync(m => m.AccountID.ToString() == accountSession.ToUpper());
                 // 有對應的'Cookies'但值不符合(可能被client修改過)
                 if (result == null)
                 {
@@ -42,7 +41,7 @@ namespace ShopApplication.Controllers
                 }
                 else
                 {
-                    return RedirectToAction(nameof(Space), new { user = result.AccountName});
+                    return RedirectToAction(nameof(Space), new { user = result.Name});
                 }
             }
         }
