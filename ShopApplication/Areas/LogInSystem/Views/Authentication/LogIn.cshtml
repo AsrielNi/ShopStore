@@ -1,0 +1,20 @@
+﻿@model ShopApplication.Areas.LogInSystem.Models.RegistrantsModelDTO
+
+@{
+    ViewData["Title"] = "LogIn Page";
+}
+
+<div>
+    <form id="RegistrantsForm" name="RegistrantsForm" asp-area="LogInSystem" asp-controller="Authentication" asp-action="VerifyLogIn" method="post">
+        <p>
+            @Html.DisplayNameFor(model => model.Name)
+            <input id="name" name="name" type="text">
+        </p>
+        <p>
+            @Html.DisplayNameFor(model => model.Password)
+            <input id="password" name="password" type="password">
+        </p>
+        
+        <input id="submit" type="submit" value="submit">
+    </form>
+</div>

@@ -1,4 +1,4 @@
-﻿@model ShopApplication.Models.AccountInfoModel
+﻿@model ShopApplication.Areas.LogInSystem.Models.RegistrantsModel
 
 @{
     ViewData["Title"] = "Account Page";
@@ -7,9 +7,9 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to Your Space</h1>
     <p>Hello</p>
-    <p>Account: @Html.DisplayFor(model => model.AccountName)</p>
+    <p>Account: @Html.DisplayFor(model => model.Name)</p>
     <p>
-        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">Log Out</a>
+        <a class="nav-link text-dark" asp-area="LogInSystem" asp-controller="Authentication" asp-action="LogOut">Log Out</a>
     </p>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
