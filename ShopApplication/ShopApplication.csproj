@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Test\Controllers\" />
-    <Folder Include="Areas\Test\Data\" />
-    <Folder Include="Areas\Test\Models\" />
-    <Folder Include="Areas\Test\Views\" />
-    <Folder Include="SqliteDataBase\" />
+    <Compile Remove="Areas\Test\**" />
+    <Content Remove="Areas\Test\**" />
+    <EmbeddedResource Remove="Areas\Test\**" />
+    <None Remove="Areas\Test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataBase\" />
   </ItemGroup>
 
   <ItemGroup>
