@@ -29,5 +29,13 @@ namespace ShopApplication.Areas.LogInSystem.Models
             Gender = modelDTO.Gender;
             Birthday = modelDTO.Birthday;
         }
+        public RegistrantsModel(RegistrantsModelDTO modelDTO, Guid guid)
+        {
+            AccountID = guid;
+            Name = modelDTO.Name;
+            Password = modelDTO.Password;
+            Gender = modelDTO.Gender;
+            Birthday = modelDTO.Birthday;
+        }
     }
 }

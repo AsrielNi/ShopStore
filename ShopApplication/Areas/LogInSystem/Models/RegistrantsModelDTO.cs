@@ -15,5 +15,14 @@ namespace ShopApplication.Areas.LogInSystem.Models
 
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
+
+        public RegistrantsModelDTO() { }
+        public RegistrantsModelDTO(RegistrantsModel model)
+        {
+            Name = model.Name;
+            Password = model.Password;
+            Gender = model.Gender;
+            Birthday = model.Birthday;
+        }
     }
 }
