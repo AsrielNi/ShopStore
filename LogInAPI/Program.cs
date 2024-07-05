@@ -1,3 +1,5 @@
+using LogInAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace LogInAPI
 {
@@ -6,6 +8,12 @@ namespace LogInAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add database to the container.
+
+            builder.Services.AddDbContext<RegistrantContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("LogInSystemDataBase")));
+
 
             // Add services to the container.
 
