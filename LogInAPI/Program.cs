@@ -5,6 +5,8 @@ namespace LogInAPI
 {
     public class Program
     {
+        // 硂场だ祘Α秈度度琌代刚WebAPI琌Τタ盽笲
+        // 代刚场だ穦硓筁SwaggerㄓЧΘ
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using ShopApplication.Data;
 using ShopApplication.Areas.LogInSystem.Data;
@@ -20,6 +19,9 @@ namespace ShopApplication
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Connect to LogInAPI via WebAPI
+            LogInAPI.APItoLINK.AttachAPI(builder);
 
             var app = builder.Build();
 
