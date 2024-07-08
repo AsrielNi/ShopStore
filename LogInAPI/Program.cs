@@ -14,7 +14,7 @@ namespace LogInAPI
             // Add database to the container.
 
             builder.Services.AddDbContext<RegistrantContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("LogInSystemDataBase")));
+                options.UseSqlite(builder.Configuration.GetConnectionString("LogInAPIDataBase")));
 
 
             // Add services to the container.

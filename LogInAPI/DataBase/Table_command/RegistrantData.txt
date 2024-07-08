@@ -1,0 +1,7 @@
+CREATE TABLE RegistrantData(
+SerialID GUID PRIMARY KEY,
+RegistrantID NCHAR(16) NOT NULL,
+Name NVARCHAR(20) NOT NULL,
+Password NVARCHAR(16) NOT NULL,
+RegistrantGender TINYINT NOT NULL,
+Birthday TEXT NOT NULL);
