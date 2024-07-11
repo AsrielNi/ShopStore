@@ -16,12 +16,34 @@ namespace LogInAPI.Controllers
             _registrantContext = registrantContext;
         }
 
-        // 從'LogInAPI'的'DataBase'中，取得對應的資料
+        // 透過'Cookies - Session'的方式，直接從'LogInAPI'的'DataBase'中，取得對應的資料
         [HttpGet]
-        public async Task<ActionResult> ReadData(string name)
+        [Route("[Action]")]
+        public async Task<ActionResult> FastGetData()
         {
-            var result = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m => m.Name == name);
-            return Ok(result);
+            Dictionary<string, string> serverResponse = new Dictionary<string, string>();
+            HttpRequest request = HttpContext.Request;
+            string? sessionID = Request.Cookies[Setting.SessionTag];
+            // 如果使用者有對應的'Cookies'時
+            if (sessionID != null)
+            {
+                var result = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m => m.SerialID.ToString() == sessionID);
+                // 如果使用者的'Cookies'沒有被修改時
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    serverResponse.Add("status", "false");
+                    serverResponse.Add("message", "please log in.");
+                    return BadRequest(serverResponse);
+                }
+            }
+            serverResponse.Add("status", "false");
+            serverResponse.Add("message", "please log in.");
+            return BadRequest(serverResponse);
+
         }
 
         // 將資料儲存至'LogInAPI'的'DataBase'中
@@ -60,6 +82,7 @@ namespace LogInAPI.Controllers
         }
 
         // 提供使用者登入用的方法
+        // 這裡會提供使用者對應的'Cookies'
         [HttpPost]
         [Route("[Action]")]
         public async Task<ActionResult> LogIn([FromForm]string name, [FromForm]string password)
@@ -72,6 +95,9 @@ namespace LogInAPI.Controllers
 
             if (result != null)
             {
+                HttpResponse response = HttpContext.Response;
+                response.Cookies.Append(Setting.SessionTag, GenerateSomething.GenerateUpperGuid(result.SerialID), Setting.DefaultCookiesOptions);
+
                 serverResponse.Add("status", "true");
                 serverResponse.Add("message", "successful log in.");
                 return Ok(serverResponse);

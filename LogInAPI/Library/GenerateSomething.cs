@@ -15,5 +15,10 @@
             }
             return new string(cluser);
         }
+
+        public static string GenerateUpperGuid(Guid guid)
+        {
+            return guid.ToString().ToUpper();
+        }
     }
 }
