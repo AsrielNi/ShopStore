@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "LogIn Page";
+}
+
+<div>
+    <form id="LogInForm" name="LogInForm" action="/api/Registrant/LogIn" method="post">
+        <p>
+            Name:
+            <input id="name" name="name" type="text">
+        </p>
+        <p>
+            Password:
+            <input id="password" name="password" type="password">
+        </p>
+        
+        <input id="submit" type="submit" value="submit">
+    </form>
+</div>
