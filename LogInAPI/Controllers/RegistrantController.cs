@@ -58,5 +58,27 @@ namespace LogInAPI.Controllers
             serverResponse.Add("message", "Repeat name.");
             return CreatedAtAction(nameof(CreateData), serverResponse);
         }
+
+        // 提供使用者登入用的方法
+        [HttpPost]
+        [Route("[Action]")]
+        public async Task<ActionResult> LogIn([FromForm]string name, [FromForm]string password)
+        {
+            Dictionary<string, string> serverResponse = new Dictionary<string, string>();
+            //檢查帳號和密碼是否是正確的
+            var result = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m =>
+                m.Name == name &&
+                m.Password == password);
+
+            if (result != null)
+            {
+                serverResponse.Add("status", "true");
+                serverResponse.Add("message", "successful log in.");
+                return Ok(serverResponse);
+            }
+            serverResponse.Add("status", "false");
+            serverResponse.Add("message", "name or password is worng.");
+            return BadRequest(serverResponse);
+        }
     }
 }

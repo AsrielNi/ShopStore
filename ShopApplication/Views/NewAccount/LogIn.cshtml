@@ -1,17 +1,15 @@
-﻿@model ShopApplication.Areas.LogInSystem.Models.RegistrantsModelDTO
-
-@{
+﻿@{
     ViewData["Title"] = "LogIn Page";
 }
 
 <div>
-    <form id="RegistrantsForm" name="RegistrantsForm" asp-area="LogInSystem" asp-controller="Authentication" asp-action="VerifyLogIn" method="post">
+    <form id="LogInForm" name="LogInForm" action="/api/Registrant/LogIn" method="post">
         <p>
-            @Html.DisplayNameFor(model => model.Name)
+            Name:
             <input id="name" name="name" type="text">
         </p>
         <p>
-            @Html.DisplayNameFor(model => model.Password)
+            Password:
             <input id="password" name="password" type="password">
         </p>
         
