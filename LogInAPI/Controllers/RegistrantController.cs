@@ -26,14 +26,37 @@ namespace LogInAPI.Controllers
 
         // 將資料儲存至'LogInAPI'的'DataBase'中
         [HttpPost]
-        public async Task<ActionResult> CreateData(RegistrantDTO modelDTO)
+        public async Task<ActionResult> CreateData([FromForm]RegistrantDTO modelDTO)
         {
-            var newID = GenerateSomething.GenerateRegistrantID(16);
-            var model = new Registrant(modelDTO, newID);
-            _registrantContext.RegistrantData.Add(model);
-            await _registrantContext.SaveChangesAsync();
+            // 儲存欲回傳之資訊，讓前端之javascript使用
+            Dictionary<string, string> serverResponse = new Dictionary<string, string>();
+            // 檢查使用者的名字是否重複
+            var result = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m => m.Name == modelDTO.Name);
+            if (result == null)
+            {
+                string newID;
+                while (true)
+                {
+                    // 產生隨機16字元的代號
+                    newID = GenerateSomething.GenerateRegistrantID(16);
+                    // 檢查代號是否重複
+                    var idResult = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m => m.RegistrantID == newID);
+                    if (idResult == null)
+                    {
+                        break;
+                    }
+                }
+                var model = new Registrant(modelDTO, newID);
+                _registrantContext.RegistrantData.Add(model);
+                await _registrantContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(CreateData), model);
+                serverResponse.Add("status", "true");
+                serverResponse.Add("message", "Successful Sign Up.");
+                return CreatedAtAction(nameof(CreateData), serverResponse);
+            }
+            serverResponse.Add("status", "false");
+            serverResponse.Add("message", "Repeat name.");
+            return CreatedAtAction(nameof(CreateData), serverResponse);
         }
     }
 }
