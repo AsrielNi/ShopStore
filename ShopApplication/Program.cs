@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using ShopApplication.Data;
-using ShopApplication.Areas.LogInSystem.Data;
 
 namespace ShopApplication
 {
@@ -13,9 +12,6 @@ namespace ShopApplication
             builder.Services.AddDbContext<ShopContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("ShopDataBase")));
 
-            // 連線至登入系統的資料庫
-            builder.Services.AddDbContext<LogInContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("LogInSystemDataBase")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -39,11 +35,6 @@ namespace ShopApplication
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.MapAreaControllerRoute(
-                name: "LogInSystem",
-                areaName: "LogInSystem",
-                pattern: "LogInSystem/{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",

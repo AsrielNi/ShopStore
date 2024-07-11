@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Test\**" />
-    <Content Remove="Areas\Test\**" />
-    <EmbeddedResource Remove="Areas\Test\**" />
-    <None Remove="Areas\Test\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="DataBase\" />
   </ItemGroup>
 
