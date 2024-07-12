@@ -107,5 +107,20 @@ namespace LogInAPI.Controllers
             serverResponse.Add("message", "name or password is worng.");
             return BadRequest(serverResponse);
         }
+
+        // 登入系統的登出功能
+        [HttpGet]
+        [Route("[Action]")]
+        public ActionResult LogOut()
+        {
+            HttpResponse response = HttpContext.Response;
+            CookieOptions cancelCookiesOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMicroseconds(1),
+            };
+
+            response.Cookies.Append(Setting.SessionTag, "", cancelCookiesOptions);
+            return Ok();
+        }
     }
 }

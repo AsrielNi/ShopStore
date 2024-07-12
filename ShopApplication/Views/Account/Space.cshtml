@@ -11,5 +11,15 @@
             }
         })
     }
+    function LogOut() {
+        $.ajax({
+            type: "get",
+            url: "/api/Registrant/LogOut",
+            success: function (response) {
+                window.location = "/Account";
+            }
+        })
+    }
 </script>
 <button onclick="test()">click!!</button>
+<button onclick="LogOut()">Log Out</button>
