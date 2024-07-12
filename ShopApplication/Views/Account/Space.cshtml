@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Account Space Page";
+}
+<script>
+    function test() {
+        $.ajax({
+            type: "post",
+            url: "/api/Registrant/FastGetData",
+            success: function (response) {
+                alert(response);
+            }
+        })
+    }
+</script>
+<button onclick="test()">click!!</button>

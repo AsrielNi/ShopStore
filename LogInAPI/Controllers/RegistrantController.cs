@@ -17,7 +17,7 @@ namespace LogInAPI.Controllers
         }
 
         // 透過'Cookies - Session'的方式，直接從'LogInAPI'的'DataBase'中，取得對應的資料
-        [HttpGet]
+        [HttpPost]
         [Route("[Action]")]
         public async Task<ActionResult> FastGetData()
         {
@@ -100,6 +100,7 @@ namespace LogInAPI.Controllers
 
                 serverResponse.Add("status", "true");
                 serverResponse.Add("message", "successful log in.");
+                serverResponse.Add("RegistrantID", result.RegistrantID);
                 return Ok(serverResponse);
             }
             serverResponse.Add("status", "false");

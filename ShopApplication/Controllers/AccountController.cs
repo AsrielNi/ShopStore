@@ -17,5 +17,9 @@ namespace ShopApplication.Controllers
         {
             return View();
         }
+        public IActionResult Space(string id)
+        {
+            return View();
+        }
     }
 }

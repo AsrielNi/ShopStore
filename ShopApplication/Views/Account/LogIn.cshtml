@@ -16,3 +16,18 @@
         <input id="submit" type="submit" value="submit">
     </form>
 </div>
+<script>
+    $("#LogInForm").submit(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: document.getElementById("LogInForm").getAttribute("method"),
+            url: document.getElementById("LogInForm").getAttribute("action"),
+            data: $("#LogInForm").serialize(),
+            success: function (response) {
+                var id = response.RegistrantID;
+                window.location = "Space?" + "id=" + id;
+            }
+        })
+    })
+</script>
