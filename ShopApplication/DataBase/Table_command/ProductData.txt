@@ -1,0 +1,7 @@
+CREATE TABLE Product(
+ProductID NCHAR(6) PRIMARY KEY,
+ProductName NVARCHAR(50) NOT NULL,
+Price INT NOT NULL,
+RemainingQuantity INT NOT NULL,
+IsSell BOOLEAN NOT NULL,
+PicturePath TEXT);
