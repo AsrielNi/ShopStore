@@ -22,23 +22,6 @@
             <label>Birthday:</label>
             <input asp-for="Birthday" type="date">
         </p>
-        <input id="submit" type="submit" value="submit">
+        <input id="submit" type="submit" onclick="SignUp('RegistrantsForm', 'LogIn')" value="submit">
     </form>
 </div>
-<script>
-    $("#RegistrantsForm").submit(function (event) {
-        event.preventDefault();
-
-        var forms = $(this);
-
-        $.ajax({
-            type: document.getElementById("RegistrantsForm").getAttribute("method"),
-            url: document.getElementById("RegistrantsForm").getAttribute("action"),
-            data: forms.serialize(),
-            success: function (response) {
-                alert(response.message);
-                window.location = "LogIn";
-            }
-        })
-    });
-</script>
