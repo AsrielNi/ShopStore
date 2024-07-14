@@ -17,6 +17,8 @@ namespace LogInAPI
         public static readonly string _apiName = "LogInAPI";
         // WebAPI專案的絕對路徑
         public static readonly string _pathForAPI = _pathForProject + $"\\{_apiName}";
+        // WebAPI專案的資源路徑
+        public static readonly string _pathForAPIWebRootPath = _pathForAPI + "\\wwwroot";
         // 用於取代'dot'的正規表示法，如果使用string.Replace()的話，會取代所有的'dot'
         public static readonly Regex _connRegex = new Regex(@"\.");
 

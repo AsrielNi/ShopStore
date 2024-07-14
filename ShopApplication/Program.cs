@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using ShopApplication.Data;
 
 namespace ShopApplication
@@ -31,6 +32,13 @@ namespace ShopApplication
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // Connect to wwwroot of LogInAPI
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(LogInAPI.APItoLINK._pathForAPIWebRootPath),
+                RequestPath = "/LogInAPI"
+            });
 
             app.UseRouting();
 

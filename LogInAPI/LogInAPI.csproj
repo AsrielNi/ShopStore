@@ -15,4 +15,8 @@
     <Folder Include="DataBase\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\LogInAPI.js" />
+  </ItemGroup>
+
 </Project>
