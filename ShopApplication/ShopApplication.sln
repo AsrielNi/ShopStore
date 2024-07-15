@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopApplication", "ShopAppl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogInAPI", "..\LogInAPI\LogInAPI.csproj", "{93B31A48-777F-4C48-8DEA-C6D8D6088E7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebAPI", "..\TestWebAPI\TestWebAPI.csproj", "{7273ED90-1833-4908-A4E2-32B6D48A425A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{93B31A48-777F-4C48-8DEA-C6D8D6088E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B31A48-777F-4C48-8DEA-C6D8D6088E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93B31A48-777F-4C48-8DEA-C6D8D6088E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7273ED90-1833-4908-A4E2-32B6D48A425A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7273ED90-1833-4908-A4E2-32B6D48A425A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7273ED90-1833-4908-A4E2-32B6D48A425A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7273ED90-1833-4908-A4E2-32B6D48A425A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
