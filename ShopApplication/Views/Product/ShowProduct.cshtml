@@ -1,0 +1,14 @@
+﻿@model ShopApplication.Models.Product
+
+@{
+    ViewData["Title"] = "Product Page";
+}
+
+<div>
+    <p>
+        @Html.DisplayFor(m => m.ProductID)
+    </p>
+    <p>
+        <img src="~/ProductMenu/@Html.DisplayFor(m => m.PicturePath)"/>
+    </p>
+</div>

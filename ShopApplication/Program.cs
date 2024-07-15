@@ -40,6 +40,11 @@ namespace ShopApplication
                 RequestPath = "/LogInAPI"
             });
 
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "ProductMenu")),
+                RequestPath = "/ProductMenu"
+            });
             app.UseRouting();
 
             app.UseAuthorization();
