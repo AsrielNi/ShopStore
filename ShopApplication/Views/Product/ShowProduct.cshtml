@@ -10,5 +10,6 @@
     </p>
     <p>
         <img src="~/ProductMenu/@Html.DisplayFor(m => m.PicturePath)"/>
+        <a asp-controller="Product" asp-action="ProductInfo" asp-route-productID="@Model.ProductID">Link to Product</a>
     </p>
 </div>

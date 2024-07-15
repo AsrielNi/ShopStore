@@ -21,5 +21,15 @@ namespace ShopApplication.Controllers
             }
             return View();
         }
+        [Route("ProductInfo/{productID}")]
+        public async Task<IActionResult> ProductInfo(string productID)
+        {
+            var result = await _shopContext.ProductData.FirstOrDefaultAsync(m => m.ProductID == productID);
+            if (result != null)
+            {
+                return View(result);
+            }
+            return NotFound();
+        }
     }
 }
