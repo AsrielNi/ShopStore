@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopApplication.Data;
-using ShopApplication.Models;
 
 namespace ShopApplication.Controllers
 {
@@ -12,15 +11,21 @@ namespace ShopApplication.Controllers
         {
             _shopContext = shopContext;
         }
-        public async Task<IActionResult> ShowProduct(string productID)
+        
+        // 作為商品清單的Action
+        // 顯示部分數量的商品
+        public IActionResult Menu()
         {
-            var result = await _shopContext.ProductData.FirstOrDefaultAsync(m => m.ProductID == productID);
-            if (result != null)
+            var results = _shopContext.ProductData.Take(20);
+            if (results != null)
             {
-                return View(result);
+                return View(results);
             }
-            return View();
+            return NotFound();
         }
+
+        // 顯示個別商品的資訊
+        // 未來考量是否繼續使用路由屬性或是查詢字串
         [Route("ProductInfo/{productID}")]
         public async Task<IActionResult> ProductInfo(string productID)
         {

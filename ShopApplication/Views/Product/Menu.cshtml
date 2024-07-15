@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ShopApplication.Models.Product>
+
+@{
+    ViewData["Title"] = "Product Menu Page";
+}
+
+@foreach (var item in Model)
+{
+    <p>
+        Name: @item.ProductName
+        <img src="~/ProductMenu/@item.PicturePath" />
+        <a asp-controller="Product" asp-action="ProductInfo" asp-route-productID="@item.ProductID">Link to @item.ProductName</a>
+    </p><br />
+}
