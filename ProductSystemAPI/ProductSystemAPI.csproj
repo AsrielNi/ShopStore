@@ -6,4 +6,26 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\Picture\Product_001.png" />
+    <Content Remove="wwwroot\Picture\Product_002.png" />
+    <Content Remove="wwwroot\Picture\Product_003.png" />
+    <Content Remove="wwwroot\Picture\Product_BG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataBase\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Picture\Product_001.png" />
+    <None Include="wwwroot\Picture\Product_002.png" />
+    <None Include="wwwroot\Picture\Product_003.png" />
+    <None Include="wwwroot\Picture\Product_BG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
+  </ItemGroup>
+
 </Project>
