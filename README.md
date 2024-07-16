@@ -5,6 +5,8 @@
 # 專案
 1. ShopApplication (MVC) - 整個方案的核心
 2. LogInAPI (WebAPI) - 登入系統
+3. ProductSystemAPI (WebAPI) - 商品相關的服務(建立中......)
+4. TestWebAPI (WebAPI) - 測試功能和邏輯用的WebAPI
 ---------------------------------------
 # 目標(可能會新增目標)
 1. 購物車系統
