@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using ProductSystemAPI.Data;
 
-namespace LogInAPI
+namespace ProductSystemAPI
 {
     public class JsonSetting
     {
