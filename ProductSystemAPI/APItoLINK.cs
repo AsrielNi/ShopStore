@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using ProductSystemAPI.Data;
 
 namespace LogInAPI
@@ -44,6 +45,14 @@ namespace LogInAPI
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+        }
+        public static void AttachSource(WebApplication app)
+        {
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(_pathForAPIWebRootPath),
+                RequestPath = $"/{_apiName}"
+            });
         }
     }
 }
