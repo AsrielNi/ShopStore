@@ -46,6 +46,8 @@ namespace ProductSystemAPI
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
         }
+
+        // 該方法屬於靜態方法，嘗試將專案的靜態資源連接到'app'上。
         public static void AttachSource(WebApplication app)
         {
             app.UseStaticFiles(new StaticFileOptions
