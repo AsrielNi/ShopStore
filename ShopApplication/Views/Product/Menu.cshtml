@@ -1,14 +1,24 @@
-﻿@model IEnumerable<ShopApplication.Models.Product>
-
-@{
+﻿@{
     ViewData["Title"] = "Product Menu Page";
 }
 
-@foreach (var item in Model)
-{
-    <p>
-        Name: @item.ProductName
-        <img src="~/ProductMenu/@item.PicturePath" />
-        <a asp-controller="Product" asp-action="ProductInfo" asp-route-productID="@item.ProductID">Link to @item.ProductName</a>
-    </p><br />
-}
+<ul id="menu"></ul>
+
+<script>
+    let dataCluster = getMenu();
+    var text = "";
+    for (var i = 0; i < dataCluster.length; i++) {
+        var info = dataCluster[i];
+        var content =
+            `
+            <li>
+                <p>${info.productID}</p>
+                <img src="${info.picturePath}" />
+                <a href="${info.link}">Link to ${info.productName}</a>
+            </li>
+            `
+        text = text + content;
+    }
+    document.getElementById("menu").innerHTML = text;
+</script>
+

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\Picture\Product_001.png" />
+    <Content Remove="wwwroot\Picture\Product_002.png" />
+    <Content Remove="wwwroot\Picture\Product_003.png" />
+    <Content Remove="wwwroot\Picture\Product_BG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataBase\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Picture\Product_001.png" />
+    <None Include="wwwroot\Picture\Product_002.png" />
+    <None Include="wwwroot\Picture\Product_003.png" />
+    <None Include="wwwroot\Picture\Product_BG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+</Project>

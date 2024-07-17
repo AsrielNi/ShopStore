@@ -8,16 +8,17 @@
 
   <ItemGroup>
     <Folder Include="DataBase\" />
-    <Folder Include="ProductMenu\Picture\" />
+    <Folder Include="DataBase\Table_command\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LogInAPI\LogInAPI.csproj" />
+    <ProjectReference Include="..\ProductSystemAPI\ProductSystemAPI.csproj" />
   </ItemGroup>
 
 </Project>

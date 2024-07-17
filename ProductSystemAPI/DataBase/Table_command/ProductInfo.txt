@@ -1,4 +1,4 @@
-CREATE TABLE Product(
+CREATE TABLE ProductInfo(
 ProductID NCHAR(6) PRIMARY KEY,
 ProductName NVARCHAR(50) NOT NULL,
 Price INT NOT NULL,

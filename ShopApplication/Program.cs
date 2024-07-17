@@ -19,6 +19,7 @@ namespace ShopApplication
 
             // Connect to LogInAPI via WebAPI
             LogInAPI.APItoLINK.AttachAPI(builder);
+            ProductSystemAPI.APItoLINK.AttachAPI(builder);
 
             var app = builder.Build();
 
@@ -40,11 +41,8 @@ namespace ShopApplication
                 RequestPath = "/LogInAPI"
             });
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "ProductMenu")),
-                RequestPath = "/ProductMenu"
-            });
+            ProductSystemAPI.APItoLINK.AttachSource(app);
+
             app.UseRouting();
 
             app.UseAuthorization();

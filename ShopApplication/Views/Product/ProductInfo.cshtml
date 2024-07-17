@@ -1,14 +1,20 @@
-﻿@model ShopApplication.Models.Product
-
-@{
+﻿@{
     ViewData["Title"] = "Product Page";
+    string productID = ViewData["productID"] as string;
 }
 
+<div id="info">
 
-<p>
-    Name: @Html.DisplayFor(m => m.ProductName)<br />
-    Price: @Html.DisplayFor(m => m.Price)<br />
-    Remaining: @Html.DisplayFor(m => m.RemainingQuantity)<br />
-    <img src="~/ProductMenu/@Html.DisplayFor(m => m.PicturePath)"/>
-</p>
+</div>
 
+<script>
+    var data = getProductInfo("@productID");
+    var text =
+        `
+        <p>Name: ${data.productName}</p>
+        <p>Price: ${data.price}</p>
+        <p>Remaining: ${data.remainingQuantity}</p>
+        <img src="${data.picturePath}" />
+        `;
+    document.getElementById("info").innerHTML = text;
+</script>

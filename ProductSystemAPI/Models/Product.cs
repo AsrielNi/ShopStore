@@ -1,4 +1,4 @@
-﻿namespace ShopApplication.Models
+﻿namespace ProductSystemAPI.Models
 {
     public class Product
     {
