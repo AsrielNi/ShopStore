@@ -1,5 +1,6 @@
 ﻿using LogInAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -44,6 +45,15 @@ namespace LogInAPI
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+        }
+        // 該方法屬於靜態方法，嘗試將專案的靜態資源連接到'app'上。
+        public static void AttachSource(WebApplication app)
+        {
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(_pathForAPIWebRootPath),
+                RequestPath = $"/{_apiName}"
+            });
         }
     }
 }

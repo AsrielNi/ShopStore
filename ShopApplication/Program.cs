@@ -34,13 +34,8 @@ namespace ShopApplication
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // Connect to wwwroot of LogInAPI
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(LogInAPI.APItoLINK._pathForAPIWebRootPath),
-                RequestPath = "/LogInAPI"
-            });
-
+            // Connect to wwwroot of APIs
+            LogInAPI.APItoLINK.AttachSource(app);
             ProductSystemAPI.APItoLINK.AttachSource(app);
 
             app.UseRouting();
