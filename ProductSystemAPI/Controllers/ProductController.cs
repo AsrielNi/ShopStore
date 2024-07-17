@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductSystemAPI.Data;
 using ProductSystemAPI.Models;
-using ProductSystemAPI.Library;
 using Microsoft.EntityFrameworkCore;
 
 namespace ProductSystemAPI.Controllers
@@ -34,11 +33,15 @@ namespace ProductSystemAPI.Controllers
 
         [HttpGet]
         [Route("[Action]")]
-        public ActionResult<IEnumerable<Product>> GetMenu()
+        public ActionResult<IQueryable<Product>> GetMenu()
         {
             var results = _productContext.ProductInfo.Take(20);
             if (results != null)
             {
+                foreach (var item in results)
+                {
+                    item.PicturePath = $"/{APItoLINK._apiName}/" + item.PicturePath;
+                }
                 return Ok(results);
             }
             return NotFound();
@@ -53,6 +56,7 @@ namespace ProductSystemAPI.Controllers
             var result = await _productContext.ProductInfo.FirstOrDefaultAsync(m => m.ProductID == productID);
             if (result != null)
             {
+                result.PicturePath = $"/{APItoLINK._apiName}/" + result.PicturePath;
                 return Ok(result);
             }
             return NotFound();

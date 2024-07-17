@@ -8,21 +8,13 @@
 </div>
 
 <script>
-    function getInfo() {
-        $.ajax({
-            type: "get",
-            url: "/api/Product/GetProductInfo/@productID",
-            success: function (response) {
-                var text = 
-                    `
-                    <p>Name: ${response.productName}</p>
-                    <p>Price: ${response.price}</p>
-                    <p>Remaining: ${response.remainingQuantity}</p>
-                    <img src="/ProductSystemAPI/${response.picturePath}" />
-                    `;
-                document.getElementById("info").innerHTML = text;
-            }
-        })
-    }
-    getInfo();
+    var data = getProductInfo("@productID");
+    var text =
+        `
+        <p>Name: ${data.productName}</p>
+        <p>Price: ${data.price}</p>
+        <p>Remaining: ${data.remainingQuantity}</p>
+        <img src="${data.picturePath}" />
+        `;
+    document.getElementById("info").innerHTML = text;
 </script>

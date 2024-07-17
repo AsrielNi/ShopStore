@@ -5,36 +5,20 @@
 <ul id="menu"></ul>
 
 <script>
-    function test() {
-        $.ajax({
-            type: "get",
-            url: "/api/Product/GetMenu",
-            success: function(response){
-                var text = "";
-                for (var i = 0; i < response.length; i++) {
-                    var info = response[i];
-                    var content = 
-                        `<li>
-                            <p>${info.productID}</p>
-                            <img src="/ProductSystemAPI/${info.picturePath}" />
-                            <a href="/Product/ProductInfo?productID=${info.productID}">Link to ${info.productName}</a>
-                        </li>`
-                    text = text + content;
-                }
-                document.getElementById("menu").innerHTML = text;
-            }
-        })
+    let dataCluster = getMenu();
+    var text = "";
+    for (var i = 0; i < dataCluster.length; i++) {
+        var info = dataCluster[i];
+        var content =
+            `
+            <li>
+                <p>${info.productID}</p>
+                <img src="${info.picturePath}" />
+                <a href="${info.link}">Link to ${info.productName}</a>
+            </li>
+            `
+        text = text + content;
     }
-    test();
+    document.getElementById("menu").innerHTML = text;
 </script>
 
-
-
-@* @foreach (var item in Model)
-{
-    <p>
-        Name: @item.ProductName
-        <img src="~/ProductSystemAPI/@item.PicturePath" />
-        <a asp-controller="Product" asp-action="ProductInfo" asp-route-productID="@item.ProductID">Link to @item.ProductName</a>
-    </p><br />
-} *@

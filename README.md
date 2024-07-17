@@ -4,8 +4,8 @@
 ---------------------------------------
 # 專案
 1. ShopApplication (MVC) - 整個方案的核心
-2. LogInAPI (WebAPI) - 登入系統
-3. ProductSystemAPI (WebAPI) - 商品相關的服務(建立中......)
+2. LogInAPI (WebAPI) - 登入相關的服務
+3. ProductSystemAPI (WebAPI) - 獲得商品資訊用的服務
 4. TestWebAPI (WebAPI) - 測試功能和邏輯用的WebAPI
 ---------------------------------------
 # 目標(可能會新增目標)
@@ -31,6 +31,9 @@
 5. 專案間的API對接和資料庫連線
 6. 讀取其他WebAPI專案的資源(透過UseStaticFiles)
 7. 路由屬性和「asp-route-」的搭配來迴避使用查詢字串作網站依據
+8. 基礎javascript撰寫
+9. 商品系統的獨立專案化
+10. 靜態資源建立和引用
 ***************************************
 # 可能的疑慮
 1. AddControllers()的重複出現是否會有影響？

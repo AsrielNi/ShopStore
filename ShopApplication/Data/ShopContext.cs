@@ -9,6 +9,5 @@ namespace ShopApplication.Data
 
         // 使用'DbContext'的初始化建構式
         public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
-        public DbSet<Product> ProductData { get; set; }
     }
 }
