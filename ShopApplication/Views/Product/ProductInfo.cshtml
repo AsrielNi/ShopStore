@@ -1,14 +1,35 @@
-﻿@model ShopApplication.Models.Product
-
-@{
+﻿@{
     ViewData["Title"] = "Product Page";
+    string productID = ViewData["productID"] as string;
 }
 
 
-<p>
+@* <p>
     Name: @Html.DisplayFor(m => m.ProductName)<br />
     Price: @Html.DisplayFor(m => m.Price)<br />
     Remaining: @Html.DisplayFor(m => m.RemainingQuantity)<br />
     <img src="~/ProductMenu/@Html.DisplayFor(m => m.PicturePath)"/>
-</p>
+</p> *@
+<div id="info">
 
+</div>
+
+<script>
+    function getInfo() {
+        $.ajax({
+            type: "get",
+            url: "/api/Product/GetProductInfo/@productID",
+            success: function (response) {
+                var text = 
+                    `
+                    <p>Name: ${response.productName}</p>
+                    <p>Price: ${response.price}</p>
+                    <p>Remaining: ${response.remainingQuantity}</p>
+                    <img src="/ProductSystemAPI/${response.picturePath}" />
+                    `;
+                document.getElementById("info").innerHTML = text;
+            }
+        })
+    }
+    getInfo();
+</script>

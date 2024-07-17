@@ -2,11 +2,12 @@
 using ProductSystemAPI.Data;
 using ProductSystemAPI.Models;
 using ProductSystemAPI.Library;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProductSystemAPI.Controllers
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("api/[Controller]")]
     public class ProductController : ControllerBase
     {
         public readonly ProductContext _productContext;
@@ -29,6 +30,32 @@ namespace ProductSystemAPI.Controllers
             _productContext.ProductInfo.Add(model);
             await _productContext.SaveChangesAsync();
             return CreatedAtAction(nameof(CreateData), model);
+        }
+
+        [HttpGet]
+        [Route("[Action]")]
+        public ActionResult<IEnumerable<Product>> GetMenu()
+        {
+            var results = _productContext.ProductInfo.Take(20);
+            if (results != null)
+            {
+                return Ok(results);
+            }
+            return NotFound();
+        }
+
+        // 顯示個別商品的資訊
+        // 未來考量是否繼續使用路由屬性或是查詢字串
+        [HttpGet]
+        [Route("[Action]/{productID}")]
+        public async Task<ActionResult<Product>> GetProductInfo(string productID)
+        {
+            var result = await _productContext.ProductInfo.FirstOrDefaultAsync(m => m.ProductID == productID);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return NotFound();
         }
     }
 }

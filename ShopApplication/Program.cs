@@ -19,6 +19,7 @@ namespace ShopApplication
 
             // Connect to LogInAPI via WebAPI
             LogInAPI.APItoLINK.AttachAPI(builder);
+            ProductSystemAPI.APItoLINK.AttachAPI(builder);
 
             var app = builder.Build();
 
