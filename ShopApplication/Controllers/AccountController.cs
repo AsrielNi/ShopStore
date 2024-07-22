@@ -19,8 +19,6 @@ namespace ShopApplication.Controllers
         }
         public IActionResult Space(string id)
         {
-            var baseCall = new APImiddle.DataBaseCall();
-            Console.WriteLine(baseCall.TestCall(id).Result);
             return View();
         }
     }

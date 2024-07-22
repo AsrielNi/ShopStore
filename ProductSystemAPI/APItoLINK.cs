@@ -20,25 +20,31 @@ namespace ProductSystemAPI
         public static readonly string _pathForAPI = _pathForProject + $"\\{_apiName}";
         // WebAPI專案的資源路徑
         public static readonly string _pathForAPIWebRootPath = _pathForAPI + "\\wwwroot";
+        // WebAPI專案的appsettings.json路徑
+        public static readonly string _settingFile = _pathForAPI + "\\appsettings.json";
         // 用於取代'dot'的正規表示法，如果使用string.Replace()的話，會取代所有的'dot'
         public static readonly Regex _connRegex = new Regex(@"\.");
 
-        // 該方法屬於靜態方法，嘗試將該WebAPI的'Main'方法中，抽出必要的原件並作為其他'MVC'模型可連接之方法。
-        // 備註：重複的AddControllers和AddEndpointsApiExplorer會不會造成其他影響，目前未知，需要深入了解。
-        public static void AttachAPI(WebApplicationBuilder builder)
+        public static string GetConnectString(string connectionKeyString = "ProductAPIDataBase")
         {
-            // 開啟該API的appsettings.json
-            string settingFile = _pathForAPI + "\\appsettings.json";
-            string jsonString = File.ReadAllText(settingFile);
+            // 讀取該WebAPI的appsettings.json
+            string jsonString = File.ReadAllText(_settingFile);
 
             // 對appsettings.json去序列化
             JsonSetting? setting = JsonSerializer.Deserialize<JsonSetting>(jsonString);
 
             // 取出對應的連接字串
-            string? relativeConn = setting.ConnectionStrings["ProductAPIDataBase"];
+            string? relativeConn = setting.ConnectionStrings[connectionKeyString];
 
             // 由於連接字串是使用相對路徑，這裡更改成絕對路徑。
             string connectString = _connRegex.Replace(relativeConn, _pathForAPI, 1);
+            return connectString;
+        }
+        // 該方法屬於靜態方法，嘗試將該WebAPI的'Main'方法中，抽出必要的原件並作為其他'MVC'模型可連接之方法。
+        // 備註：重複的AddControllers和AddEndpointsApiExplorer會不會造成其他影響，目前未知，需要深入了解。
+        public static void AttachAPI(WebApplicationBuilder builder)
+        {
+            string connectString = GetConnectString();
             
             builder.Services.AddDbContext<ProductContext>(options =>
                 options.UseSqlite(connectString));
@@ -55,6 +61,13 @@ namespace ProductSystemAPI
                 FileProvider = new PhysicalFileProvider(_pathForAPIWebRootPath),
                 RequestPath = $"/{_apiName}"
             });
+        }
+        public static ProductContext GetContext(string connectionKeyString = "ProductAPIDataBase")
+        {
+            DbContextOptions<ProductContext> contextOptions = new DbContextOptionsBuilder<ProductContext>()
+                .UseSqlite(GetConnectString(connectionKeyString))
+                .Options;
+            return new ProductContext(contextOptions);
         }
     }
 }
