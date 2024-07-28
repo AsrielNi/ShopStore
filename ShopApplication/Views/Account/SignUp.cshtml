@@ -1,14 +1,14 @@
-﻿@model LogInAPI.Models.RegistrantDTO
+﻿@model LogInAPI.Models.AccountModelDTO
 
 @{
     ViewData["Title"] = "SignUp Page";
 }
 
 <div>
-    <form id="RegistrantsForm" name="RegistrantsForm" action="/api/Registrant" method="post">
+    <form id="RegistrantsForm" name="RegistrantsForm" action="/api/Registrant/SignUp" method="post">
         <p>
             <label>Name:</label>
-            <input asp-for="Name" type="text">
+            <input asp-for="AccountName" type="text">
         </p>
         <p>
             <label>Password:</label>
@@ -16,7 +16,7 @@
         </p>
         <p>
             <label>Gender:</label>
-            <select asp-for="RegistrantGender" asp-items="@Html.GetEnumSelectList<LogInAPI.Models.Gender>()"></select>
+            <select asp-for="AccountGender" asp-items="@Html.GetEnumSelectList<LogInAPI.Models.Gender>()"></select>
         </p>
         <p>
             <label>Birthday:</label>

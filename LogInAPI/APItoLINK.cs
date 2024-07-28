@@ -49,7 +49,7 @@ namespace LogInAPI
         {
             string connectString = GetConnectString();
 
-            builder.Services.AddDbContext<RegistrantContext>(options =>
+            builder.Services.AddDbContext<LogInContext>(options =>
                 options.UseSqlite(connectString));
 
             builder.Services.AddControllers();
@@ -67,12 +67,12 @@ namespace LogInAPI
         }
 
         // 提供WebAPI專案的DbContext的靜態方法，可以透過connectionKeyString來調整使用的資料庫
-        public static RegistrantContext GetContext(string connectionKeyString = "LogInAPIDataBase")
+        public static LogInContext GetContext(string connectionKeyString = "LogInAPIDataBase")
         {
-            DbContextOptions<RegistrantContext> contextOptions = new DbContextOptionsBuilder<RegistrantContext>()
+            DbContextOptions<LogInContext> contextOptions = new DbContextOptionsBuilder<LogInContext>()
                 .UseSqlite(GetConnectString(connectionKeyString))
                 .Options;
-            return new RegistrantContext(contextOptions);
+            return new LogInContext(contextOptions);
         }
     }
 }

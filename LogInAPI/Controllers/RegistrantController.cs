@@ -10,10 +10,12 @@ namespace LogInAPI.Controllers
     [ApiController]
     public class RegistrantController : ControllerBase
     {
-        public readonly RegistrantContext _registrantContext;
-        public RegistrantController(RegistrantContext registrantContext)
+        public readonly LogInContext _loginContext;
+
+        // 對應 AddDbContext<LogInContext> 的建構式
+        public RegistrantController(LogInContext loginContext)
         {
-            _registrantContext = registrantContext;
+            _loginContext = loginContext;
         }
 
         // 透過'Cookies - Session'的方式，直接從'LogInAPI'的'DataBase'中，取得對應的資料
@@ -23,11 +25,11 @@ namespace LogInAPI.Controllers
         {
             Dictionary<string, string> serverResponse = new Dictionary<string, string>();
             HttpRequest request = HttpContext.Request;
-            string? sessionID = Request.Cookies[Setting.SessionTag];
+            string? sessionID = Request.Cookies[ApiSetting.SessionTag];
             // 如果使用者有對應的'Cookies'時
             if (sessionID != null)
             {
-                var result = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m => m.SerialID.ToString() == sessionID);
+                var result = await _loginContext.AccountData.FirstOrDefaultAsync(m => m.SessionID.ToString() == sessionID);
                 // 如果使用者的'Cookies'沒有被修改時
                 if (result != null)
                 {
@@ -48,37 +50,40 @@ namespace LogInAPI.Controllers
 
         // 將資料儲存至'LogInAPI'的'DataBase'中
         [HttpPost]
-        public async Task<ActionResult> CreateData([FromForm]RegistrantDTO modelDTO)
+        [Route("[Action]")]
+        public async Task<ActionResult> SignUp([FromForm]AccountModelDTO modelDTO)
         {
             // 儲存欲回傳之資訊，讓前端之javascript使用
             Dictionary<string, string> serverResponse = new Dictionary<string, string>();
-            // 檢查使用者的名字是否重複
-            var result = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m => m.Name == modelDTO.Name);
+            // 檢查帳戶的名字是否重複
+            var result = await _loginContext.AccountData.FirstOrDefaultAsync(m => m.AccountName == modelDTO.AccountName);
             if (result == null)
             {
-                string newID;
                 while (true)
                 {
-                    // 產生隨機16字元的代號
-                    newID = GenerateSomething.GenerateRegistrantID(16);
-                    // 檢查代號是否重複
-                    var idResult = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m => m.RegistrantID == newID);
-                    if (idResult == null)
+                    var newAccountModel = new AccountModel(modelDTO);
+                    // 檢查新建立的AccountModel中的AccountID是否重複於資料庫
+                    var checkResult = await _loginContext.AccountData.FirstOrDefaultAsync(m => m.AccountID == newAccountModel.AccountID);
+                    // 如果沒有重複的話
+                    if (checkResult == null)
                     {
+                        // 將新的AccountModel寫入至資料庫並脫離迴圈
+                        _loginContext.AccountData.Add(newAccountModel);
+                        await _loginContext.SaveChangesAsync();
                         break;
                     }
                 }
-                var model = new Registrant(modelDTO, newID);
-                _registrantContext.RegistrantData.Add(model);
-                await _registrantContext.SaveChangesAsync();
-
                 serverResponse.Add("status", "true");
                 serverResponse.Add("message", "Successful Sign Up.");
-                return CreatedAtAction(nameof(CreateData), serverResponse);
+                return CreatedAtAction(nameof(SignUp), serverResponse);
             }
-            serverResponse.Add("status", "false");
-            serverResponse.Add("message", "Repeat name.");
-            return CreatedAtAction(nameof(CreateData), serverResponse);
+            else
+            {
+                serverResponse.Add("status", "false");
+                serverResponse.Add("message", "Repeat name.");
+                return BadRequest(serverResponse);
+            }
+            
         }
 
         // 提供使用者登入用的方法
@@ -89,18 +94,21 @@ namespace LogInAPI.Controllers
         {
             Dictionary<string, string> serverResponse = new Dictionary<string, string>();
             //檢查帳號和密碼是否是正確的
-            var result = await _registrantContext.RegistrantData.FirstOrDefaultAsync(m =>
-                m.Name == name &&
+            var result = await _loginContext.AccountData.FirstOrDefaultAsync(m =>
+                m.AccountName == name &&
                 m.Password == password);
-
+            // 如果帳號和密碼都正確的話
             if (result != null)
             {
+                Console.WriteLine(result.SessionID);
+                // 給予特定的Cookies作為登入之依據
                 HttpResponse response = HttpContext.Response;
-                response.Cookies.Append(Setting.SessionTag, GenerateSomething.GenerateUpperGuid(result.SerialID), Setting.DefaultCookiesOptions);
+                response.Cookies.Append(
+                    ApiSetting.SessionTag, result.SessionID.ToString().ToUpper(), ApiSetting.DefaultCookiesOptions);
 
                 serverResponse.Add("status", "true");
                 serverResponse.Add("message", "successful log in.");
-                serverResponse.Add("RegistrantID", result.RegistrantID);
+                serverResponse.Add("RegistrantID", result.AccountID);
                 return Ok(serverResponse);
             }
             serverResponse.Add("status", "false");
@@ -113,13 +121,14 @@ namespace LogInAPI.Controllers
         [Route("[Action]")]
         public ActionResult LogOut()
         {
+            // 重新設置登入依據的Cookies，將其設置為空字串並存在極短時間，讓其被自動消除
             HttpResponse response = HttpContext.Response;
             CookieOptions cancelCookiesOptions = new CookieOptions
             {
                 Expires = DateTime.Now.AddMicroseconds(1),
             };
 
-            response.Cookies.Append(Setting.SessionTag, "", cancelCookiesOptions);
+            response.Cookies.Append(ApiSetting.SessionTag, "", cancelCookiesOptions);
             return Ok();
         }
     }

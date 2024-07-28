@@ -2,11 +2,11 @@
 
 namespace LogInAPI.Models
 {
-    public class RegistrantDTO
+    public class AccountModelDTO
     {
-        public string Name { get; set; }
+        public string AccountName { get; set; }
         public string Password { get; set; }
-        public Gender RegistrantGender { get; set; }
+        public Gender AccountGender { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }

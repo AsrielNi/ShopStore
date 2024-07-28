@@ -9,7 +9,7 @@ namespace ShopApplication.APImiddle
     public class DataBaseCall
     {
         // 引用LogInAPI的RegistrantContext
-        public RegistrantContext FromRegistrantContext()
+        public LogInContext FromRegistrantContext()
         {
             return LogInAPI.APItoLINK.GetContext();
         }
